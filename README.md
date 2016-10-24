@@ -9,6 +9,7 @@ Assim, quando todos os magistrados que estão participando do sorteio estiverem 
 
 Forma de utilização do programa:
 Para compilar a classe Distribuicao.java execute: javac Distribuicao.java
+
 A classe Distribuicao.java, quando compilada produzirá os binários:
 Distribuicao.class e Magistrado.class.
 
