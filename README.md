@@ -1,4 +1,4 @@
-# distribuicao
+# Distribuição
 Proposta de solução de distribuição de processos por classe
 
 Esta é uma implementação didática da solução para demonstrar o funcionamento da distribuição processual por classes controlada pela alternatividade e proporcionalidade.
