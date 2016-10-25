@@ -45,7 +45,7 @@ Se, erroneamente, quando o Magistrado A se afastar, anotarmos um débito em rela
 
 Não é culpa do Magistrado A o fato de o sistema ter distribuído mais ou menos processos para outros magistrados.  A única coisa que importa para o Magistrado A é que seu crédito não pode ser perdido. 
  
-Portanto, a diferença é um crédito. Quem tem mais crédito do que deveria, será retirado do sorteio até que o crédito dos demais aumentem e, consequentemente, o crédito do retirado diminua. Este é o procedimento de equilíbrio de créditos.  
+Portanto, a diferença é um crédito. Quem tem mais crédito do que deveria, será retirado do sorteio até que o crédito dos demais aumentem e, consequentemente, o crédito do magistrado retirado diminua. Este é o procedimento de equilíbrio de créditos.  
 
 Quando há necessidade de redistribuição, não devemos debitar do magistrado o processo que está saindo dele. Isso poderia fazer com que as diferenças (valores entre zero e 3, idealmente) assumissem valores negativos, o que embutiria uma complexidade desnecessária no controle do sistema. Nesta situação basta realizar um controle de "créditos indevidos" que indica quantos processos de uma classe o magistrado redistribuiu.  
 
