@@ -6,7 +6,7 @@ Análise de uma proposta de distribuição quando o sistema está em desequilíb
 
 Problema 1: O sistema tenta sortear um número de magistrados igual ou maior que a quantidade de processos.
 
-Quando o sistema sorteia se cada magistrado irá ou não compor a lista de distribuição, caso o corum não seja atingido, o sistema tenta novamente até que consiga o número mínimo de magistrados para garantir que apenas um processo seja distribuído para um magistrado. 
+Quando o sistema sorteia se cada magistrado irá ou não compor a lista de distribuição, caso o quorum não seja atingido, o sistema tenta novamente até que consiga o número mínimo de magistrados para garantir que apenas um processo seja distribuído para um magistrado. 
 
 Por exemplo, 40 magistrados disponíveis para 39 processos será necessário sortear 39 magistrados. Com 50% de chance para cada magistrado ser escolhido, a probabilidade de 39 magistrados serem sorteados ao mesmo tempo é 1 em 550 Bilhões de tentativas.
 Portanto, dependendo da quantidade de magistrados que precisam ser sorteados, este caminho torna-se inviável. 
