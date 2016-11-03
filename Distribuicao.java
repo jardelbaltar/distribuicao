@@ -1,47 +1,54 @@
+package br.jus.distribuicao;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Distribuicao {
-	private int totalDeMagistradosDoOrgao;
-	private int totalDeProcessosParaDistribuir;
+	public int totalDeMagistradosDoOrgao;
+	public int totalDeProcessosParaDistribuir;
 	private Magistrado ultimoMagistradoSorteado;
 	private Magistrado magistradoSorteado;
 	private List<Integer> processosDaClasseParaDistribuir;
 	private List<Magistrado> magistradosDoOrgao;
 	private List<Magistrado> magistradosDoOrgaoSemAfastados;
 	private List<Magistrado> magistradosHabilitadosParaSorteio;
-	private HashMap<Integer, Integer> controleDiferenca;
-	private HashMap<Integer, Integer> controleDoTotalDistribuido;
+	public HashMap<Integer, Integer> controleDiferenca;
+	public HashMap<Integer, Integer> controleDoTotalDistribuido;
+	public HashMap<Integer, String> processosDistribuidos;
 
 	/**
-	 * Esta solução permite a distribuição para um processo ou para um lote. 
-	 * Na verdade, não faz diferença a quantidade de processos. Para cada processo distribuído 
-	 * é realizado o controle da Diferença entre magistrados na classe processual em questão.
-	 * A Diferença é uma variável que é incrementada cada vez que o magistrado é sorteado. Esta 
-	 * variável é controlada para cada classe de forma distinta. Assim, haverá uma tabela no banco de dados
-	 * para vincular o valores das diferenças entre magistrados em cada uma das classes processuais.
-	 * Haverá um controle nesta variável da Diferença para manter os valores sempre baixos 
-	 * (entre 0 e 3) com exceção dos casos de prevenção de magistrado. Este procedimento de manter 
-	 * os valores diferenciais baixos impedirá a desproporcionalidade entre magistrados, principalmente
-	 * para os casos de afastamentos e de entrada no órgão.
-	 * Não foi o propósito deste exemplo de solução o esgotamento de todas as regras necessárias, por exemplo,
-	 * a redistribuição em caso de suspeição ou impedimento, etc., a compensação de processos nas turmas 
-	 * quando o magistrado recebe processo do Conselho Especial
-	 * e Câmara de Uniformização, bem como a compensação de processos redistribuídos em caso de urgência.
-	 * Para cada caso, deve-se avaliar a necessidade de ajustar a o valor da Diferença do magistrado afetado.
+	 * Esta solução permite a distribuição para um processo ou para um lote. Na
+	 * verdade, não faz diferença a quantidade de processos. Para cada processo
+	 * distribuído é realizado o controle da Diferença entre magistrados na
+	 * classe processual em questão. A Diferença é uma variável que é
+	 * incrementada cada vez que o magistrado é sorteado. Esta variável é
+	 * controlada para cada classe de forma distinta. Assim, haverá uma tabela
+	 * no banco de dados para vincular o valores das diferenças entre
+	 * magistrados em cada uma das classes processuais. Haverá um controle nesta
+	 * variável da Diferença para manter os valores sempre baixos (entre 0 e 3)
+	 * com exceção dos casos de prevenção de magistrado. Este procedimento de
+	 * manter os valores diferenciais baixos impedirá a desproporcionalidade
+	 * entre magistrados, principalmente para os casos de afastamentos e de
+	 * entrada no órgão. Não foi o propósito deste exemplo de solução o
+	 * esgotamento de todas as regras necessárias, por exemplo, a redistribuição
+	 * em caso de suspeição ou impedimento, etc., a compensação de processos nas
+	 * turmas quando o magistrado recebe processo do Conselho Especial e Câmara
+	 * de Uniformização, bem como a compensação de processos redistribuídos em
+	 * caso de urgência. Para cada caso, deve-se avaliar a necessidade de
+	 * ajustar a o valor da Diferença do magistrado afetado.
 	 */
 	public void distribuir() {
 		carregarProcessosDaClasseParaDistribuir();
 		carregarControleDiferenca();
 		carregarControleDoTotalDistribuido();
-		Iterator<Integer> processos = processosDaClasseParaDistribuir.iterator();
+		Iterator<Integer> processos = processosDaClasseParaDistribuir
+				.iterator();
+		processosDistribuidos = new HashMap<Integer, String>();
 		while (processos.hasNext()) {
 			sortearMagistrado();
-			System.out.println("Processo número " + processos.next() + ": " + magistradoSorteado.getNome());
+			Integer processo = processos.next();
+			processosDistribuidos.put(processo, magistradoSorteado.getNome());
+			System.out.println("Processo número " + processo + ": "
+					+ magistradoSorteado.getNome());
 		}
 	}
 
@@ -83,7 +90,8 @@ public class Distribuicao {
 	 * 
 	 */
 	private List<Magistrado> removerMagistradosAfastados() {
-		List<Magistrado> lista = new ArrayList<Magistrado>(this.magistradosDoOrgao);
+		List<Magistrado> lista = new ArrayList<Magistrado>(
+				this.magistradosDoOrgao);
 		Iterator<Magistrado> magistrados = lista.iterator();
 		while (magistrados.hasNext()) {
 			Magistrado magistrado = magistrados.next();
@@ -100,7 +108,8 @@ public class Distribuicao {
 	 * 
 	 */
 	private List<Magistrado> removerUltimoMagistradoSorteado() {
-		List<Magistrado> lista = new ArrayList<Magistrado>(this.magistradosDoOrgaoSemAfastados);
+		List<Magistrado> lista = new ArrayList<Magistrado>(
+				this.magistradosDoOrgaoSemAfastados);
 		if (ultimoMagistradoSorteado != null) {
 			lista.remove(ultimoMagistradoSorteado);
 		}
@@ -116,7 +125,8 @@ public class Distribuicao {
 	 * 
 	 */
 	private void removerMagistradosComDiferencaRegimental() {
-		List<Magistrado> lista = new ArrayList<Magistrado>(this.magistradosHabilitadosParaSorteio);
+		List<Magistrado> lista = new ArrayList<Magistrado>(
+				this.magistradosHabilitadosParaSorteio);
 		Iterator<Magistrado> magistrados = lista.iterator();
 		while (magistrados.hasNext()) {
 			Magistrado magistrado = magistrados.next();
@@ -132,7 +142,8 @@ public class Distribuicao {
 	 * fins de demonstração.
 	 */
 	private void atualizarControleDoTotalDistribuido() {
-		Integer total = controleDoTotalDistribuido.get(magistradoSorteado.getId());
+		Integer total = controleDoTotalDistribuido
+				.get(magistradoSorteado.getId());
 		total = total + 1;
 		controleDoTotalDistribuido.put(magistradoSorteado.getId(), total);
 	}
@@ -162,7 +173,8 @@ public class Distribuicao {
 	 */
 	private void ajustarControleDaDiferencaParaValoresMinimos() {
 		Boolean valorMinimoZero = false;
-		List<Magistrado> lista = new ArrayList<Magistrado>(this.magistradosDoOrgaoSemAfastados);
+		List<Magistrado> lista = new ArrayList<Magistrado>(
+				this.magistradosDoOrgaoSemAfastados);
 		Iterator<Magistrado> magistrados = lista.iterator();
 		while (magistrados.hasNext()) {
 			Magistrado magistrado = magistrados.next();
@@ -182,7 +194,8 @@ public class Distribuicao {
 	 * banco de dados
 	 */
 	private void decrementarDifereca() {
-		List<Magistrado> lista = new ArrayList<Magistrado>(this.magistradosDoOrgaoSemAfastados);
+		List<Magistrado> lista = new ArrayList<Magistrado>(
+				this.magistradosDoOrgaoSemAfastados);
 		Iterator<Magistrado> magistrados = lista.iterator();
 		while (magistrados.hasNext()) {
 			Magistrado magistrado = magistrados.next();
@@ -248,20 +261,23 @@ public class Distribuicao {
 		System.out.println("----------------------------------------");
 		System.out.println("Total de Processos Distribuídos por Magistrado:");
 		for (int i = 1; i <= totalDeMagistradosDoOrgao; i++) {
-			System.out.println("Magistrado " + i + ": " + d.controleDoTotalDistribuido.get(i));
+			System.out.println("Magistrado " + i + ": "
+					+ d.controleDoTotalDistribuido.get(i));
 		}
 		System.out.println("----------------------------------------");
 		System.out.println("Controle de Diferença entre Magistrados:");
 		for (int i = 1; i <= totalDeMagistradosDoOrgao; i++) {
-			System.out.println("Magistrado " + i + ": " + d.controleDiferenca.get(i));
+			System.out.println(
+					"Magistrado " + i + ": " + d.controleDiferenca.get(i));
 		}
 	}
 
 }
 
-class Magistrado {
+class Magistrado implements Comparable<Magistrado> {
 	private Integer id;
 	private String nome;
+	private Integer debito;
 
 	public Integer getId() {
 		return id;
@@ -279,6 +295,14 @@ class Magistrado {
 		this.nome = nome;
 	}
 
+	public Integer getDebito() {
+		return debito;
+	}
+
+	public void setDebito(Integer debito) {
+		this.debito = debito;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null)
@@ -288,4 +312,32 @@ class Magistrado {
 		Magistrado other = (Magistrado) obj;
 		return id == null ? false : id.equals(other.id);
 	}
+
+	public int compareTo(Magistrado compareMagistrado) {
+
+		int compareDebito = ((Magistrado) compareMagistrado).getDebito();
+
+		// ascending order
+		// return this.debito - compareDebito;
+
+		// descending order
+		return compareDebito - this.debito;
+
+	}
+
+	public static Comparator<Magistrado> MagistradoDebitoComparator = new Comparator<Magistrado>() {
+
+		public int compare(Magistrado magistrado1, Magistrado magistrado2) {
+
+			Integer debito1 = magistrado1.getDebito();
+			Integer debito2 = magistrado2.getDebito();
+
+			// ascending order
+			// return debito1.compareTo(debito2);
+
+			// descending order
+			return debito2.compareTo(debito1);
+		}
+
+	};
 }
