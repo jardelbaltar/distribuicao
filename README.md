@@ -23,7 +23,7 @@ Por exemplo, 40 magistrados para 18 processos: na maioria dos testes o sistema l
 
 Ponto positivo:
 
-Quando a quantidade de magistrados é baixa, por exemplo, 20 magistrados ou menos, o sistema tente ao equilíbrio mesmo quando há muitos processos. Por exemplo, 20 magistrados para 19 processos, o sistema consegue realizar o sorteio e equilibrar a diferença em poucas distribuições.
+Quando a quantidade de magistrados é baixa, por exemplo, 20 magistrados ou menos, o sistema tende ao equilíbrio mesmo quando há muitos processos. Por exemplo, 20 magistrados para 19 processos, o sistema consegue realizar o sorteio e equilibrar a diferença em poucas distribuições.
 
 
 
