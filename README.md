@@ -1,3 +1,26 @@
+# Simulação
+Análise de uma proposta de distribuição quando o sistema está em desequilíbrio (acima de 3 processos de diferença) e a quantidade de processos é inferior à quantidade de magistrados disponíveis.
+Código implementado na classe Simulacao.java
+
+Problema 1: O sistema tenta sortear um número de magistrados igual ou maior que a quantidade de processos.
+
+Quando o sistema sorteia se cada magistrado irá ou não compor a lista de distribuição, caso o corum não seja atingido, o sistema tenta novamente até que consiga o número mínimo de magistrados para garantir que apenas um processo seja distribuído para um magistrado. 
+Por exemplo, 40 magistrados disponíveis para 39 processos será necessário sortear 39 magistrados. Com 50% de chance para cada magistrado ser escolhido, a probabilidade de 39 magistrados serem sorteados ao mesmo tempo é 1 em 550 Bilhões de tentativas.
+Portanto, dependendo da quantidade de magistrados que precisam ser sorteados, este caminho torna-se inviável. 
+
+Problema 2: A quantidade de processos para distribuição é constantemente maior que a metade de magistrados disponíveis.
+
+Quando a quantidade de magistrados é alta (30 a 40) e a quantidade de processos é constantemente maior que a metade de magistrados disponíveis, a tendência é não conseguir equilibrar o sistema e aumentar a distância entre os magistrados.
+Por exemplo, 40 magistrados para 25 processos. O sistema, em 90% dos testes, não alcança o equilíbrio mesmo após 5 mil distribuições. O mesmo acontece com 30 magistrados para 20 processos. 
+
+Quando a quantidade de magistrados é alta (30 a 40) e a quantidade de processos é constantemente menor que a metade de magistrados disponíveis, a tendência é conseguir equilibrar o sistema a longo prazo. A quantidade de distribuições necessárias para atingir o equilíbrio pode variar. 
+Por exemplo, 40 magistrados para 18 processos: na maioria dos testes o sistema levou mais de mil distribuições para equilibrar.
+
+Ponto positivo:
+Quando a quantidade de magistrados é baixa, por exemplo, 20 magistrados ou menos, o sistema tente ao equilíbrio mesmo quando há muitos processos. Por exemplo, 20 magistrados para 19 processos, o sistema consegue realizar o sorteio e equilibrar a diferença em poucas distribuições.
+
+
+
 # Distribuição
 Proposta de solução de distribuição de processos por classe
 
@@ -7,19 +30,6 @@ A proporcionalidade é garantida com o controle da Diferença de processos distr
 O ponto chave da solução é manter os valores das diferenças sempre entre zero e o limite máximo (3 processos).
 Assim, quando todos os magistrados que estão participando do sorteio estiverem com valores acima de zero, o sistema ajustará os valores para baixo novamente. Isso impedirá que os valores se acumulem indiscriminadamente. Essa premissa de manter os valores sempre baixos impedirá que haja uma diferença com os magistrados que se afastam ou com aqueles que entram no órgão.
 
-Forma de utilização do programa:
-Para compilar a classe Distribuicao.java execute: javac Distribuicao.java
-
-A classe Distribuicao.java, quando compilada produzirá os binários:
-Distribuicao.class e Magistrado.class.
-
-Para testar uma distribuição, execute o seguinte comando na pasta em que estiverem os arquivos Distribuicao.class e Magistrado.class:
-
-java Distribuicao {quantidadeDeMagistrados} {quantidadeDeProcessos}
-
-exemplo: para distribuir 50 processos entre 15 magistrados execute
-
-java Distribuicao 15 50
 
 # Débito ou Crédito? 
 Para não cair na armadilha da compensação indevida, devemos sempre enxergar a distribuição de processos como crédito. Todas as vezes que um magistrado recebe um processo, está com crédito perante o colegiado. Quando um magistrado deixa de receber um processo não está com crédito, mas também não está com débito. 
