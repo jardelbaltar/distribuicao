@@ -1,6 +1,7 @@
 # Simulação
-Análise de uma proposta de distribuição quando o sistema está em desequilíbrio (acima de 3 processos de diferença) e a quantidade de processos é inferior à quantidade de magistrados disponíveis.
 Código implementado na classe Simulacao.java
+Análise de uma proposta de distribuição quando o sistema está em desequilíbrio (acima de 3 processos de diferença) e a quantidade de processos é inferior à quantidade de magistrados disponíveis.
+
 
 Problema 1: O sistema tenta sortear um número de magistrados igual ou maior que a quantidade de processos.
 
