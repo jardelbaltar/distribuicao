@@ -2,6 +2,14 @@ package br.jus.distribuicao;
 
 import java.util.*;
 
+/**
+ * Simulção de cenário de distribuição da solução em análise: 1. Quantidade de
+ * processos menor que a quantidade de magistrados; 2. Sistema em desequilíbrio,
+ * ou seja, distância maior que 3 processos entre os magistrados
+ * 
+ * @author Jardel Baltar
+ *
+ */
 public class Simulacao {
 	public static HashMap<Integer, Integer> controleDiferencaAtual;
 	public static HashMap<Integer, Integer> controleDoTotalDistribuido;
@@ -27,11 +35,19 @@ public class Simulacao {
 
 	public static void distribuir() {
 		try {
+			// usado para gerar um desequilíbrio inicial aleatório
 			sementeDoDesequilibrio = 3;
 			totalDeMagistrados = 40;
-			totalDeProcessos = 20;
+			// Quantidade fixa de processos para cada distribuição.
+			// Deve ser menor que a quantidade de magistrados.
+			// Se a variável simularQuantidadeDeProcessos = true
+			// o valor atribuído aqui é ignorado.
+			totalDeProcessos = 0;
+			// quantidade de distribuições para simular
 			limiteDeDistribuicoes = 500;
-			simularQuantidadeDeProcessos = false;
+			// usada para gerar aleatoriamente a quantidade de processos
+			// para cada distribuição.
+			simularQuantidadeDeProcessos = true;
 			considerarGrandeza = false;
 			subtrairQuantidadeDeProcessosRecebidos = true;
 			somarQuantidadeDeProcessosNaoRecebidos = false;
@@ -60,7 +76,6 @@ public class Simulacao {
 					// limite de processos a 80% do quantitativo de magistrados
 					// quando o total de processos é simulado.
 					// Sem este limite, pode acontecer de não conseguir sortear.
-
 					totalDeProcessos = random.nextInt(
 							(int) Math.ceil(totalDeMagistrados * 0.8)) + 1;
 				}
