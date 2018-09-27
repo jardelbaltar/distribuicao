@@ -34,7 +34,7 @@ public class Distribuicao {
 	 * turmas quando o magistrado recebe processo do Conselho Especial e Câmara
 	 * de Uniformização, bem como a compensação de processos redistribuídos em
 	 * caso de urgência. Para cada caso, deve-se avaliar a necessidade de
-	 * ajustar a o valor da Diferença do magistrado afetado.
+	 * ajustar a o valor da Diferença do magistrado afetado. 
 	 */
 	public void distribuir() {
 		carregarProcessosDaClasseParaDistribuir();
